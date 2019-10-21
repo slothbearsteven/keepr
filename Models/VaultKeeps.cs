@@ -1,4 +1,4 @@
-namespace keepr.Models
+namespace Keepr.Models
 {
   public class VaultKeeps
   {

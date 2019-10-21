@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 
-namespace keepr.Models
+namespace Keepr.Models
 {
   public class Vault
   {

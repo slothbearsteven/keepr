@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using keepr.Models;
-using keepr.Services;
+using Keepr.Models;
+using Keepr.Services;
 
-namespace keepr.Controllers
+namespace Keepr.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]

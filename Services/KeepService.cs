@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using keepr.Models;
-using keepr.Repositories;
+using Keepr.Models;
+using Keepr.Repositories;
 
-namespace keepr.Services
+namespace Keepr.Services
 {
   public class KeepService
   {
