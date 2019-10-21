@@ -29,7 +29,6 @@ namespace Keepr.Services
     {
       int id = _repo.Create(newKeep);
       newKeep.Id = id;
-      _repo.Create(newKeep);
       return newKeep;
     }
 
