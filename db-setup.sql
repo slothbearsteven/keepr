@@ -1,3 +1,5 @@
+USE sbkeepr;
+
 -- CREATE TABLE users (
 --     id VARCHAR(255) NOT NULL,
 --     username VARCHAR(255) NOT NULL,
@@ -5,18 +7,6 @@
 --     hash VARCHAR(255) NOT NULL,
 --     PRIMARY KEY (id),
 --     UNIQUE KEY email (email)
--- );
-
--- CREATE TABLE vaults (
---     id int NOT NULL AUTO_INCREMENT,
---     name VARCHAR(255) NOT NULL,
---     description VARCHAR(255) NOT NULL,
---     userId VARCHAR(255),
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
---         REFERENCES users(id)
---         ON DELETE CASCADE,  
---     PRIMARY KEY (id)
 -- );
 
 -- CREATE TABLE keeps (
@@ -34,6 +24,20 @@
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
+
+
+-- CREATE TABLE vaults (
+--     id int NOT NULL AUTO_INCREMENT,
+--     name VARCHAR(255) NOT NULL,
+--     description VARCHAR(255) NOT NULL,
+--     userId VARCHAR(255),
+--     INDEX userId (userId),
+--     FOREIGN KEY (userId)
+--         REFERENCES users(id)
+--         ON DELETE CASCADE,  
+--     PRIMARY KEY (id)
+-- );
+
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,
