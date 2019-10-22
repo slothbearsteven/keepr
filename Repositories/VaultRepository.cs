@@ -65,7 +65,7 @@ namespace Keepr.Repositories
             (vaultId, keepId, userId)
             VALUES
             (@vaultId, @keepId, @userId)";
-      _db.Execute(sql, new { vaultId, keepId });
+      _db.Execute(sql, new { vaultId, keepId, userId });
     }
 
     public IEnumerable<Keep> GetKeepsByVaultId(int vaultId)

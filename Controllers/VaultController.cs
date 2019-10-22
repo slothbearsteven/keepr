@@ -91,11 +91,12 @@ namespace Keepr.Controllers
 
 
     //vaultkeeps
-    [HttpPut("{id}/addKeep")]
-    public ActionResult<string> AddKeepToVault([FromBody] Keep keep, int id)
+    [HttpPut("{id}/addKeep/{keepId}")]
+    public ActionResult<string> AddKeepToVault([FromBody] Keep keep, int id, int keepId)
     {
       try
       {
+        keep.Id = keepId;
         string userId = HttpContext.User.FindFirstValue("Id");
         return Ok(_vs.AddKeep(id, keep.Id, userId));
       }
@@ -118,14 +119,15 @@ namespace Keepr.Controllers
       }
     }
 
-    [HttpPut("{id}/removeKeep")]
-    public ActionResult<string> RemoveKeepFromVault([FromBody] VaultKeeps so, int id)
+    [HttpPut("{id}/removeKeep/{keepId}")]
+    public ActionResult<string> RemoveKeepFromVault([FromBody] VaultKeeps vk, int id, int keepId)
     {
       try
       {
-        so.VaultId = id;
+        vk.VaultId = id;
+        vk.KeepId = keepId;
         string userId = HttpContext.User.FindFirstValue("Id");
-        return Ok(_vs.RemoveKeep(so, userId));
+        return Ok(_vs.RemoveKeep(vk, userId));
       }
       catch (Exception e)
       {
