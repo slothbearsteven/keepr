@@ -14,10 +14,11 @@ namespace Keepr.Repositories
       _db = db;
     }
 
-    public IEnumerable<Vault> Get()
+
+    public IEnumerable<Vault> GetByUser(string id)
     {
-      string sql = "SELECT * FROM vaults";
-      return _db.Query<Vault>(sql);
+      string sql = "SELECT * FROM vaults WHERE userId = @id";
+      return _db.Query<Vault>(sql, new { id });
     }
 
     public Vault Get(int id)
@@ -57,13 +58,13 @@ namespace Keepr.Repositories
       _db.Execute(sql, new { id });
     }
 
-    public void AddKeep(int vaultId, int keepId)
+    public void AddKeep(int vaultId, int keepId, string userId)
     {
       string sql = @"
             INSERT INTO vaultkeeps
-            (vaultId, keepId)
+            (vaultId, keepId, userId)
             VALUES
-            (@vaultId, @keepId)";
+            (@vaultId, @keepId, @userId)";
       _db.Execute(sql, new { vaultId, keepId });
     }
 

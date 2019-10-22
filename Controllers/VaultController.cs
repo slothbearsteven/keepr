@@ -25,7 +25,8 @@ namespace Keepr.Controllers
     {
       try
       {
-        return Ok(_vs.Get());
+        string userId = HttpContext.User.FindFirstValue("Id");
+        return Ok(_vs.Get(userId));
       }
       catch (Exception e)
       {
@@ -40,20 +41,6 @@ namespace Keepr.Controllers
       {
         string userId = HttpContext.User.FindFirstValue("Id");
         return Ok(_vs.Get(id, userId));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-
-    [HttpGet("{id}/keeps")]
-    public ActionResult<Vault> GetKeeps(int id)
-    {
-      try
-      {
-        return Ok(_vs.GetKeep(id));
       }
       catch (Exception e)
       {
@@ -89,7 +76,21 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+    public ActionResult<string> Delete(int id)
+    {
+      try
+      {
+        var userId = HttpContext.User.FindFirstValue("Id");
+        return Ok(_vs.Delete(id, userId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
+
+    //vaultkeeps
     [HttpPut("{id}/addKeep")]
     public ActionResult<string> AddKeepToVault([FromBody] Keep keep, int id)
     {
@@ -97,6 +98,19 @@ namespace Keepr.Controllers
       {
         string userId = HttpContext.User.FindFirstValue("Id");
         return Ok(_vs.AddKeep(id, keep.Id, userId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/keeps")]
+    public ActionResult<Vault> GetKeeps(int id)
+    {
+      try
+      {
+        return Ok(_vs.GetKeep(id));
       }
       catch (Exception e)
       {
@@ -119,19 +133,6 @@ namespace Keepr.Controllers
       }
     }
 
-    [HttpDelete("{id}")]
-    public ActionResult<string> Delete(int id)
-    {
-      try
-      {
-        var userId = HttpContext.User.FindFirstValue("Id");
-        return Ok(_vs.Delete(id, userId));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
 
   }
 }

@@ -16,9 +16,9 @@ namespace Keepr.Services
     }
 
     //VAULT SERVICES
-    public IEnumerable<Vault> Get()
+    public IEnumerable<Vault> Get(string Id)
     {
-      return _repo.Get();
+      return _repo.GetByUser(Id);
     }
 
     public Vault Get(int id, string userId)
@@ -68,7 +68,7 @@ namespace Keepr.Services
       if (vault == null || vault.UserId != userId) { throw new Exception("Invalid Vault Id "); }
       Keep keepToAdd = _keepRepo.Get(keepId);
       if (keepToAdd == null) { throw new Exception("Invalid Keep Id "); }
-      _repo.AddKeep(id, keepId);
+      _repo.AddKeep(id, keepId, userId);
       return "Successfully added Keep to Vault";
     }
 
@@ -77,7 +77,7 @@ namespace Keepr.Services
       VaultKeeps vault = _repo.GetVaultKeeps(vk);
       if (vault == null || vault.UserId != userId) { throw new Exception("Invalid Id"); }
       _repo.RemoveKeepFromVault(vault.Id);
-      return "Successfully Booted";
+      return "Successfully removed";
     }
   }
 }
