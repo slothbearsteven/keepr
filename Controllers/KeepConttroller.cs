@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Keepr.Models;
 using Keepr.Services;
+using System.Security.Claims;
 
 namespace Keepr.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
-  public class KeepController : ControllerBase
+  public class KeepsController : ControllerBase
   {
     private readonly KeepService _ks;
 
-    public KeepController(KeepService ks)
+    public KeepsController(KeepService ks)
     {
       _ks = ks;
     }
@@ -43,11 +44,28 @@ namespace Keepr.Controllers
       }
     }
 
+    [HttpGet("user")]
+    public ActionResult<IEnumerable<Keep>> GetByUser()
+    {
+      try
+      {
+        string userId = HttpContext.User.FindFirstValue("Id");
+        return Ok(_ks.GetByUser(userId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+
     [HttpPost]
     public ActionResult<Keep> Create([FromBody] Keep newKeep)
     {
       try
       {
+        newKeep.UserId = HttpContext.User.FindFirstValue("Id");
         return Ok(_ks.Create(newKeep));
       }
       catch (Exception e)
@@ -63,7 +81,7 @@ namespace Keepr.Controllers
       try
       {
         newKeep.Id = id;
-        return Ok(_ks.Create(newKeep));
+        return Ok(_ks.Edit(newKeep));
       }
       catch (Exception e)
       {

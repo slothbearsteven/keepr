@@ -26,6 +26,12 @@ namespace Keepr.Repositories
       return _db.QueryFirstOrDefault<Keep>(sql, new { id });
     }
 
+    public IEnumerable<Keep> GetByUser(string id)
+    {
+      string sql = "SELECT * FROM keeps WHERE userId = @id";
+      return _db.Query<Keep>(sql, new { id });
+    }
+
     public int Create(Keep newKeep)
     {
       string sql = @"
@@ -44,8 +50,8 @@ namespace Keepr.Repositories
             SET
                 name = @Name,
                 description = @Description,
-                img = @ImgUrl
-                views=@Views
+                imgUrl = @ImgUrl,
+                views=@Views,
                 kept=@Kept
             WHERE id = @Id";
       _db.Execute(sql, keep);

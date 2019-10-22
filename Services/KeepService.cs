@@ -21,8 +21,13 @@ namespace Keepr.Services
     public Keep Get(int id)
     {
       Keep exists = _repo.Get(id);
-      if (exists == null) { throw new Exception("Invalid Id Homie"); }
+      if (exists == null) { throw new Exception("Invalid Id "); }
       return exists;
+    }
+
+    public IEnumerable<Keep> GetByUser(string id)
+    {
+      return _repo.GetByUser(id);
     }
 
     public Keep Create(Keep newKeep)
@@ -34,23 +39,23 @@ namespace Keepr.Services
 
     public Keep Edit(Keep newData)
     {
-      Keep Keep = _repo.Get(newData.Id);
-      if (Keep == null) { throw new Exception("Invalid Id Homie"); }
-      Keep.Name = newData.Name;
-      Keep.Description = newData.Description;
-      Keep.Views = newData.Views;
-      Keep.Kept = newData.Kept;
-      Keep.ImgUrl = newData.ImgUrl;
-      _repo.Edit(Keep);
-      return Keep;
+      Keep keep = _repo.Get(newData.Id);
+      if (keep == null) { throw new Exception("Invalid Id "); }
+      keep.Name = newData.Name;
+      keep.Description = newData.Description;
+      keep.Views = newData.Views;
+      keep.Kept = newData.Kept;
+      keep.ImgUrl = newData.ImgUrl;
+      _repo.Edit(keep);
+      return keep;
     }
 
     public string Delete(int id)
     {
       Keep Keep = _repo.Get(id);
-      if (Keep == null) { throw new Exception("Invalid Id Homie"); }
+      if (Keep == null) { throw new Exception("Invalid Id "); }
       _repo.Delete(id);
-      return "Successfully Booted";
+      return "Successfully Deleted";
     }
   }
 }

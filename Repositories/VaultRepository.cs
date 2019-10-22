@@ -4,7 +4,7 @@ using System.Data;
 using Dapper;
 using Keepr.Models;
 
-namespace keepr.Repositories
+namespace Keepr.Repositories
 {
   public class VaultRepository
   {
@@ -22,7 +22,6 @@ namespace keepr.Repositories
 
     public Vault Get(int id)
     {
-      //FIXME get the relational data
       string sql = "SELECT * FROM vaults WHERE id = @id";
       return _db.QueryFirstOrDefault<Vault>(sql, new { id });
     }
@@ -36,7 +35,7 @@ namespace keepr.Repositories
             (@Name,@Description,@UserId);
             SELECT LAST_INSERT_ID();
             ";
-      return _db.ExecuteScalar<int>(sql, newVault); //get the new id back from line 36 and return to service
+      return _db.ExecuteScalar<int>(sql, newVault);
 
     }
 
@@ -58,7 +57,7 @@ namespace keepr.Repositories
       _db.Execute(sql, new { id });
     }
 
-    public void AddKeep(int vaultId, string keepId)
+    public void AddKeep(int vaultId, int keepId)
     {
       string sql = @"
             INSERT INTO vaultkeeps
