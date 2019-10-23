@@ -96,10 +96,7 @@ export default new Vuex.Store({
       }
     },
 
-    async getKeep({
-      commit,
-      dispatch
-    }, keepId) {
+    async getKeep({ commit, dispatch }, keepId) {
       try {
         let res = await api.get("keeps/" + keepId)
         commit('setCurrentKeep', res.data)
@@ -141,6 +138,46 @@ export default new Vuex.Store({
         let change = await api.put('/vault/' + vaultId + '/' + keepId)
         dispatch('getKeepsByVault')
       } catch (e) {
+        console.error(e)
+      }
+    },
+
+
+    //SECTION vaults
+
+    async getVaults({ commit, dispatch }) {
+      try {
+        let res = await api.get("/vaults")
+        commit('setVaults', res.data)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async createVault({ commit, dispatch }, vaultData) {
+      try {
+        await api.put('/vaults', vaultData)
+        dispatch('getVaults')
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
+    async getVault({ commit, dispatch }, vaultId) {
+      try {
+        let res = await api.get("vaults/" + vaultId)
+        commit('setCurrentVault', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async deleteVault({ commit, dispatch }, vaultId) {
+      try {
+        let res = await api.delete('/vaults/' + vaultId)
+        dispatch('getVaults')
+      }
+
+      catch (e) {
         console.error(e)
       }
     }
