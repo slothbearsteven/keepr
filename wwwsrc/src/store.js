@@ -96,10 +96,18 @@ export default new Vuex.Store({
       }
     },
 
-    async getKeep({ commit, dispatch }, keepId) {
+    async getKedit({ commit, dispatch }, keepId) {
       try {
         let res = await api.get("keeps/" + keepId)
         commit('setCurrentKeep', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editKeep({ commit, dispatch }, keep) {
+      try {
+        let res = await api.put("keeps/" + keep.id, keep)
+        dispatch('setCurrentKeep', res.data)
       } catch (error) {
         console.error(error)
       }
