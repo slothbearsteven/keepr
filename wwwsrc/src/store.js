@@ -30,9 +30,22 @@ export default new Vuex.Store({
     resetState(state) {
       //clear the entire state object of user data
       state.user = {}
+      state.keeps = []
+      state.currentKeep = {}
+      state.currentVault = {}
+      state.vaults = []
     },
     setKeeps(state, keeps) {
       state.keeps = keeps
+    },
+    setCurrentKeep(state, keep) {
+      state.currentKeep = keep
+    },
+    setVaults(state, vaults) {
+      state.vaults = vaults
+    },
+    setCurrentVault(state, vault) {
+      state.currentVault = vault
     }
   },
   actions: {
@@ -65,6 +78,7 @@ export default new Vuex.Store({
       }
     },
 
+    //SECTION keeps
     async getKeeps({ commit, dispatch }) {
       try {
         let res = await api.get("/keeps")
@@ -72,6 +86,64 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e)
       }
+    },
+    async createKeep({ commit, dispatch }, keepData) {
+      try {
+        await api.put('/keeps', keepData)
+        dispatch('getKeeps')
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
+    async getKeep({
+      commit,
+      dispatch
+    }, keepId) {
+      try {
+        let res = await api.get("keeps/" + keepId)
+        commit('setCurrentKeep', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getKeepsbyVault({ commit, dispatch }, vaultId) {
+      try {
+        let res = await api.get('vaults/' + vaultId + '/keeps')
+        commit('setKeeps', res.data)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
+    async deleteKeep({ commit, dispatch }, keepId) {
+      try {
+        let res = await api.delete('/keeps/' + keepId)
+        dispatch('getKeeps')
+      }
+
+      catch (e) {
+        console.error(e)
+      }
+    },
+
+    async addKeep({ commit, dispatch }, vaultId, keep) {
+      try {
+        let change = await api.put('/vault/' + vaultId + '/' + keep.Id, keep)
+        dispatch('getKeepsbyVault')
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
+    async removeKeep({ commit, dispatch }, vaultId, keepId) {
+      try {
+        let change = await api.put('/vault/' + vaultId + '/' + keepId)
+        dispatch('getKeepsByVault')
+      } catch (e) {
+        console.error(e)
+      }
     }
+
   }
 })
