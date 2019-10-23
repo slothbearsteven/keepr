@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
 import AuthService from './AuthService'
+import { generateKeyPairSync } from 'crypto'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,11 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    keeps: [],
+    vaults: [],
+    currentKeep: {},
+    currentVault: {},
   },
   mutations: {
     setUser(state, user) {
@@ -25,6 +30,9 @@ export default new Vuex.Store({
     resetState(state) {
       //clear the entire state object of user data
       state.user = {}
+    },
+    setKeeps(state, keeps) {
+      state.keeps = keeps
     }
   },
   actions: {
@@ -54,6 +62,15 @@ export default new Vuex.Store({
         router.push({ name: "login" })
       } catch (e) {
         console.warn(e.message)
+      }
+    },
+
+    async getKeeps({ commit, dispatch }) {
+      try {
+        let res = await api.get("/keeps")
+        commit('setKeeps', res.data)
+      } catch (e) {
+        console.error(e)
       }
     }
   }
