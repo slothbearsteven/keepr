@@ -8,7 +8,6 @@ using Keepr.Services;
 
 namespace Keepr.Controllers
 {
-  [Authorize]
   [ApiController]
   [Route("/api/[controller]")]
   public class VaultsController : ControllerBase

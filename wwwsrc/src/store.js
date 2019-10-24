@@ -107,7 +107,8 @@ export default new Vuex.Store({
     async editKeep({ commit, dispatch }, keep) {
       try {
         let res = await api.put("keeps/" + keep.id, keep)
-        dispatch('setCurrentKeep', res.data)
+        dispatch('getKeep', keep.id)
+        router.push({ path: "/keep/" + keep.id });
       } catch (error) {
         console.error(error)
       }

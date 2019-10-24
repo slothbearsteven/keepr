@@ -1,8 +1,8 @@
 <template>
   <div class="Keeps">
     <div class="container-fluid">
-      <div class="row justify-content-center" v-for="keep in keeps" :key="keep.id">
-        <div class="col-4">
+      <div class="row justify-content-center">
+        <div class="col-4" v-for="keep in keeps" :key="keep.id">
           {{keep.Name}}
           <div class="row">
             <div class="col-12">
@@ -13,9 +13,7 @@
           <br />
 
           <!-- FIXME Keep views not increasing, fix views up method -->
-          <router-link :to="{name:'keep' , params: {keepId: keep.id}}">
-            <button class="btn btn-dark" @click="ViewsUp(keep)">Closer Look</button>
-          </router-link>
+          <button class="btn btn-dark" @click="ViewsUp(keep)">Closer Look</button>
           <br />
           {{keep.views}} {{keep.kept}}
         </div>
@@ -41,7 +39,7 @@ export default {
   },
   methods: {
     ViewsUp(keep) {
-      keep.views = keep.views++;
+      keep.views++;
       this.$store.dispatch("editKeep", keep);
     }
   },
