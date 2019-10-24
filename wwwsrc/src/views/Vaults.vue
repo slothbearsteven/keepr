@@ -21,6 +21,9 @@ export default {
   computed: {
     vaults() {
       return this.$store.state.vaults;
+    },
+    user() {
+      return this.$store.state.user;
     }
   },
   methods: {},

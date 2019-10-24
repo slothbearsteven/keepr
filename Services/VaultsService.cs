@@ -18,6 +18,7 @@ namespace Keepr.Services
     //VAULT SERVICES
     public IEnumerable<Vault> Get(string Id)
     {
+      if (Id == null) { throw new Exception("Invalid user Id"); }
       return _repo.GetByUser(Id);
     }
 

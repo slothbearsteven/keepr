@@ -95,7 +95,14 @@ export default new Vuex.Store({
         console.error(e)
       }
     },
-
+    async getKeepsByUser({ commit, dispatch }) {
+      try {
+        let res = await api.get("/keeps/user")
+        commit('setKeeps', res.data)
+      } catch (e) {
+        console.error(e)
+      }
+    },
     async getKeep({ commit, dispatch }, keepId) {
       try {
         let res = await api.get("keeps/" + keepId)
@@ -104,6 +111,8 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+
+
     async editKeep({ commit, dispatch }, keep) {
       try {
         let res = await api.put("keeps/" + keep.id, keep)

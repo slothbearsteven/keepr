@@ -27,6 +27,7 @@ namespace Keepr.Services
 
     public IEnumerable<Keep> GetByUser(string id)
     {
+      if (id == null) { throw new Exception("Invalid User Id "); }
       return _repo.GetByUser(id);
     }
 

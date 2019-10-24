@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>Welcome Home {{user.username}}</h1>
+    <div v-if="user.id">Create a keep!</div>
     <br />
     <keeps />
   </div>
