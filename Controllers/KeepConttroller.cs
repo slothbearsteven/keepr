@@ -66,6 +66,10 @@ namespace Keepr.Controllers
       try
       {
         newKeep.UserId = HttpContext.User.FindFirstValue("Id");
+        if (newKeep.UserId == null)
+        {
+          throw new Exception("Invalid User Id ");
+        }
         return Ok(_ks.Create(newKeep));
       }
       catch (Exception e)

@@ -7,7 +7,7 @@ import { generateKeyPairSync } from 'crypto'
 
 Vue.use(Vuex)
 
-let baseUrl = location.host.includes('localhost') ? '//localhost:5000/' : '/'
+let baseUrl = location.host.includes('localhost') ? 'https://localhost:5001/' : '/'
 
 let api = Axios.create({
   baseURL: baseUrl + "api/",
