@@ -10,6 +10,8 @@ import Keep from './views/Keep.vue'
 import Vaults from './views/Vaults.vue'
 // @ts-ignore
 import MyKeeps from './views/MyKeeps.vue'
+// @ts-ignore
+import Vault from './views/Vault.vue'
 
 Vue.use(Router)
 
@@ -31,14 +33,20 @@ export default new Router({
       component: Keep
     },
     {
+      path: '/mykeeps',
+      name: 'mykeeps',
+      component: MyKeeps
+    },
+    {
       path: '/vaults',
       name: 'vaults',
       component: Vaults
     },
     {
-      path: '/mykeeps',
-      name: 'mykeeps',
-      component: MyKeeps
+      path: '/vaults/:vaultId',
+      name: 'vault',
+      component: Vault
     }
+
   ]
 })

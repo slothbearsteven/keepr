@@ -6,6 +6,9 @@
           <router-link :to="{name:'vaults'}">Vaults</router-link>
         </div>
         <div class="col-3">
+          <router-link :to="{name:'mykeeps'}">My Keeps</router-link>
+        </div>
+        <div class="col-3">
           <router-link :to="{name:'home'}">Home</router-link>
         </div>
         <div class="col-3">

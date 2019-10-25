@@ -131,10 +131,16 @@ export default new Vuex.Store({
       }
     },
 
-    async deleteKeep({ commit, dispatch }, keepId) {
+    async deleteKeep({ commit, dispatch }, keep) {
       try {
-        let res = await api.delete('/keeps/' + keepId)
-        dispatch('getKeeps')
+        if (keep.private) {
+          let res = await api.delete('/keeps/' + keep.id)
+          dispatch('getKeepsByUser')
+        }
+        else {
+          let res = await api.delete('/keeps/' + keep.id)
+          dispatch('getKeeps')
+        }
       }
 
       catch (e) {
@@ -142,18 +148,19 @@ export default new Vuex.Store({
       }
     },
 
-    async addKeep({ commit, dispatch }, vaultId, keep) {
+    async addKeep({ commit, dispatch }, payload) {
       try {
-        let change = await api.put('/vault/' + vaultId + '/' + keep.Id, keep)
+        let change = await api.put('/vaults/' + payload.vaultId + '/addKeep/' + payload.keep.id, payload.keep)
         dispatch('getKeepsbyVault')
       } catch (e) {
         console.error(e)
       }
     },
 
-    async removeKeep({ commit, dispatch }, vaultId, keepId) {
+    async removeKeep({ commit, dispatch }, payload) {
       try {
-        let change = await api.put('/vault/' + vaultId + '/' + keepId)
+        debugger
+        let change = await api.put('/vaults/' + payload.vaultId + '/removeKeep/' + payload.keepId)
         dispatch('getKeepsByVault')
       } catch (e) {
         console.error(e)
@@ -173,7 +180,7 @@ export default new Vuex.Store({
     },
     async createVault({ commit, dispatch }, vaultData) {
       try {
-        await api.put('/vaults', vaultData)
+        await api.post('/vaults', vaultData)
         dispatch('getVaults')
       } catch (e) {
         console.error(e)
@@ -182,8 +189,10 @@ export default new Vuex.Store({
 
     async getVault({ commit, dispatch }, vaultId) {
       try {
+
         let res = await api.get("vaults/" + vaultId)
         commit('setCurrentVault', res.data)
+        dispatch('getKeepsbyVault', vaultId)
       } catch (error) {
         console.error(error)
       }

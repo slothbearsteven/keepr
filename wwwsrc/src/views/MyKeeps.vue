@@ -1,6 +1,6 @@
 <template>
   <div class="MyKeeps">
-    Hello there
+    Here's all the Keeps you've made, including private ones!
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-4" v-for="keep in keeps" :key="keep.id">
@@ -12,7 +12,9 @@
           </div>
           {{keep.description}}
           <br />
-          {{keep.views}} {{keep.kept}}
+          Views: {{keep.views}} Kept:{{keep.kept}}
+          <br />
+          <button class="btn btn-danger" @click="deleteKeep(keep)">Delete</button>
         </div>
       </div>
     </div>
@@ -34,7 +36,11 @@ export default {
       return this.$store.state.keeps;
     }
   },
-  methods: {},
+  methods: {
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
+    }
+  },
   components: {}
 };
 </script>

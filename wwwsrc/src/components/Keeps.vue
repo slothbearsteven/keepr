@@ -17,7 +17,7 @@
           <br />
           <div v-if="user.id != keep.userId"></div>
           <div v-else>
-            <button class="btn btn-danger" @click="deleteKeep(keep.id)">Delete</button>
+            <button class="btn btn-danger" @click="deleteKeep(keep)">Delete</button>
           </div>
         </div>
       </div>
@@ -49,8 +49,8 @@ export default {
       this.$store.dispatch("editKeep", keep);
     },
 
-    deleteKeep(keepid) {
-      this.$store.dispatch("deleteKeep", keepid);
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
     }
   },
   components: {}
