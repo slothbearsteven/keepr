@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-4" v-for="keep in keeps" :key="keep.id">
-          {{keep.Name}}
+          {{keep.name}}
           <div class="row">
             <div class="col-12">
               <img :src="keep.imgUrl" alt="Keep Image cannot be displayed" />
@@ -11,11 +11,14 @@
           </div>
           {{keep.description}}
           <br />
-
-          <!-- FIXME Keep views not increasing, fix views up method -->
           <button class="btn btn-dark" @click="ViewsUp(keep)">Closer Look</button>
           <br />
-          {{keep.views}} {{keep.kept}}
+          Views: {{keep.views}} Kept:{{keep.kept}}
+          <br />
+          <div v-if="user.id != keep.userId"></div>
+          <div v-else>
+            <button class="btn btn-danger" @click="deleteKeep(keep.id)">Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -35,12 +38,19 @@ export default {
   computed: {
     keeps() {
       return this.$store.state.keeps;
+    },
+    user() {
+      return this.$store.state.user;
     }
   },
   methods: {
     ViewsUp(keep) {
       keep.views++;
       this.$store.dispatch("editKeep", keep);
+    },
+
+    deleteKeep(keepid) {
+      this.$store.dispatch("deleteKeep", keepid);
     }
   },
   components: {}
